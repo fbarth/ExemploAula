@@ -42,5 +42,26 @@ plot(iris$Petal.Length,
      iris$Petal.Width, 
      pch=19, col=iris$Species)
 
+# quando nao existir o pacote
+# install.packages("party")
+library(party)
+
+ind <- sample(2, nrow(iris),
+              replace = TRUE,
+              prob = c(0.8, 0.2))
+
+treinamento <- iris[ind == 1, ]
+teste <- iris[ind == 2, ]
+
+model <- ctree(Species ~ 
+                 Sepal.Length + 
+                 Sepal.Width + 
+                 Petal.Length +
+                 Petal.Width, data = iris)
+plot(model)
+
+iris$SpeciesPredicted <- predict(model, iris)
+
+table(iris$Species, iris$SpeciesPredicted)
 
 
